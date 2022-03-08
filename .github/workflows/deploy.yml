@@ -9,13 +9,13 @@ on:
 env:
   # Postgres
   POSTGRESQL_VERSION: 13.1
-  POSTGRESQL_DB: amigoscode
+  POSTGRESQL_DB: rafaeldb
   POSTGRESQL_USER: postgres
   POSTGRESQL_PASSWORD: password
   # Java
   JAVA_VERSION: 1.15
   # DockerHub
-  DOCKER_HUB_USERNAME: amigoscode
+  DOCKER_HUB_USERNAME: rafameirel
   # AWS & Elastic Bean Stalk
   AWS_REGION: eu-west-1
   EB_ENVIRONMENT_NAME: Springbootreactfullstack-env
@@ -71,14 +71,14 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':white_check_mark: pushed amigoscode/springboot-react-fullstack:${{steps.build-number.outputs.BUILD_NUMBER}} to docker hub... https://hub.docker.com/repository/docker/amigoscode/springboot-react-fullstack'
+          text: ':white_check_mark: pushed rafameirel/springboot-react-fullstack:${{steps.build-number.outputs.BUILD_NUMBER}} to docker hub... https://hub.docker.com/repository/docker/rafameirel/springboot-react-fullstack'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update and commit app version in docker-compose.yaml
         run: |
           BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
           echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
-          sed -i -E 's_(amigoscode/springboot-react-fullstack:)([^"]*)_\1'${BUILD_NUMBER}'_' elasticbeanstalk/docker-compose.yml
+          sed -i -E 's_(rafameirel/springboot-react-fullstack:)([^"]*)_\1'${BUILD_NUMBER}'_' elasticbeanstalk/docker-compose.yml
           echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -109,7 +109,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right: http://springbootreactfullstack-env.eba-3imjbkem.eu-west-1.elasticbeanstalk.com'
+          text: ':tada: :arrow_right: http://myfullstackjavareact-env.eba-xwkqb95y.us-east-2.elasticbeanstalk.com'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()

@@ -220,6 +220,7 @@ function App() {
                   width={75}
                   src="https://user-images.githubusercontent.com/56368908/156858168-f36a5881-7f4f-4c88-adcc-c80728666f90.jpg"
               />
+              <p>My app</p>
               <Divider>
                 <a rel="noopener noreferrer"
                     target="_blank"

@@ -1,7 +1,21 @@
 import './App.css';
 import {deleteStudent, getAllStudents} from './client';
 import { useEffect, useState } from 'react';
-import {Layout, Menu, Breadcrumb, Table, Spin, Button, Tag, Avatar, Popconfirm, Radio, message, Image} from 'antd';
+import {
+  Layout,
+  Menu,
+  Breadcrumb,
+  Table,
+  Spin,
+  Button,
+  Tag,
+  Avatar,
+  Popconfirm,
+  Radio,
+  message,
+  Image,
+  Divider
+} from 'antd';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -207,6 +221,13 @@ function App() {
                   src="https://user-images.githubusercontent.com/56368908/156858168-f36a5881-7f4f-4c88-adcc-c80728666f90.jpg"
               />
               <p>Rafael's FullStack React+Java</p>
+              <Divider>
+                <a rel="noopener noreferrer"
+                    target="_blank"
+                    href="https://www.linkedin.com/in/rafael-meirelles-b644979a/">My Linkedin
+                </a>
+              </Divider>
+
             </Footer>
           </Layout>
         </Layout>

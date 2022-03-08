@@ -222,7 +222,8 @@ function App() {
               />
               <p>Rafael's FullStack React+Java</p>
               <Divider>
-                <a target="_blank"
+                <a rel="noopener noreferrer"
+                    target="_blank"
                     href="https://www.linkedin.com/in/rafael-meirelles-b644979a/">My Linkedin
                 </a>
               </Divider>

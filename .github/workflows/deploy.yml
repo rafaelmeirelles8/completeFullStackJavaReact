@@ -2,7 +2,7 @@ name: CICD
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
   workflow_dispatch:
 
@@ -13,13 +13,13 @@ env:
   POSTGRESQL_USER: postgres
   POSTGRESQL_PASSWORD: password
   # Java
-  JAVA_VERSION: 1.15
+  JAVA_VERSION: 1.11
   # DockerHub
   DOCKER_HUB_USERNAME: rafameirel
   # AWS & Elastic Bean Stalk
-  AWS_REGION: eu-west-1
-  EB_ENVIRONMENT_NAME: Springbootreactfullstack-env
-  EB_APPLICATION_NAME: springboot-react-fullstack
+  AWS_REGION: us-east-2
+  EB_ENVIRONMENT_NAME: Myfullstackjavareact-env
+  EB_APPLICATION_NAME: myfullstack-java-react
   EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yml
 
 jobs:
@@ -74,7 +74,7 @@ jobs:
           text: ':white_check_mark: pushed rafameirel/springboot-react-fullstack:${{steps.build-number.outputs.BUILD_NUMBER}} to docker hub... https://hub.docker.com/repository/docker/rafameirel/springboot-react-fullstack'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Update and commit app version in docker-compose.yaml
+      - name: Update and commit app version in docker-compose.yml
         run: |
           BUILD_NUMBER=${{steps.build-number.outputs.BUILD_NUMBER}}
           echo -e "Current elasticbeanstalk/docker-compose.yml\n$(cat elasticbeanstalk/docker-compose.yml)"

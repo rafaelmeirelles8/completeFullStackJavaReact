@@ -109,7 +109,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right: http://myfullstackjavareact-env.eba-xwkqb95y.us-east-2.elasticbeanstalk.com/'
+          text: ':tada: :arrow_right: http://myfullstackjavareact-env.eba-xwkqb95y.us-east-2.elasticbeanstalk.com'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()

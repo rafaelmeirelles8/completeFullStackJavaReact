@@ -18,7 +18,7 @@ env:
   DOCKER_HUB_USERNAME: rafameirel
   # AWS & Elastic Bean Stalk
   AWS_REGION: us-east-2
-  EB_ENVIRONMENT_NAME: Myfullstackjavareact-env
+  EB_ENVIRONMENT_NAME: Myfullstackjavareact-env-1
   EB_APPLICATION_NAME: myfullstack-java-react
   EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yml
 

@@ -221,12 +221,17 @@ function App() {
                   src="https://user-images.githubusercontent.com/56368908/156858168-f36a5881-7f4f-4c88-adcc-c80728666f90.jpg"
               />
               <p>Rafael's FullStack Java+React+aws</p>
-              <Divider>
-                <a rel="noopener noreferrer"
-                    target="_blank"
-                    href="https://www.linkedin.com/in/rafael-meirelles-b644979a/">My Linkedin
-                </a>
-              </Divider>
+              <Divider/>
+              <a rel="noopener noreferrer"
+                 target="_blank"
+                 href="https://www.linkedin.com/in/rafael-meirelles-b644979a/">My Linkedin
+              </a>
+              <br/>
+              <a rel="noopener noreferrer"
+                 target="_blank"
+                 href="https://github.com/rafaelmeirelles8/">My Github
+              </a>
+
 
             </Footer>
           </Layout>

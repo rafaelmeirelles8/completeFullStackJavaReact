@@ -121,7 +121,7 @@ function App() {
   const [collapsed, setCollapsed] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [showDrawer, setShowDrawer] = useState(false);
-  const [loggedUser, setLoggedUser] = useState('Rafael');
+  const [loggedUser, setLoggedUser] = useState('');
 
   const fetchStudents = () =>
       getAllStudents()
@@ -137,6 +137,7 @@ function App() {
           })
 
   useEffect(() => {
+    setLoggedUser('Rafael');
     fetchStudents();
   }, []);
 

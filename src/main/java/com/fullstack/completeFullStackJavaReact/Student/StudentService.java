@@ -29,7 +29,9 @@ public class StudentService {
 
     public void deleteStudent(Student student) {
         Optional<Student> existentStudent = studentRepository.findById(student.getId());
+
         existentStudent.orElseThrow(() -> new StudentNotFoundException("User with id " + student.getId() + " does not exist"));
+
         studentRepository.delete(student);
     }
 }

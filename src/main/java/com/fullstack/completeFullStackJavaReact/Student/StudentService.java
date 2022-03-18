@@ -20,8 +20,11 @@ public class StudentService {
     }
 
     public Student getStudentById(Long id) {
-        return studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " does not exist"));
+        Optional<Student> student = studentRepository.findById(id);
+
+        student.orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " does not exist"));
+
+        return student.get();
     }
 
     public void createStudent(Student student) {

@@ -42,7 +42,7 @@ class StudentServiceTest {
 
     @Test
     void canCreateStudent() {
-        //give
+        //given
         String email = "rafa@gmail.com";
         Student student = new Student(
                 "Rafael",
@@ -62,8 +62,29 @@ class StudentServiceTest {
     }
 
     @Test
+    void canUpdateStudent() {
+        //given
+        String email = "rafa@gmail.com";
+        Student student = new Student(
+                "Rafael",
+                email,
+                Gender.MALE
+        );
+
+        //when
+        underTest.updateStudent(student);
+
+        //then
+        ArgumentCaptor<Student> studentArgumentCaptor = ArgumentCaptor.forClass(Student.class);
+        verify(studentRepository).save(studentArgumentCaptor.capture());
+
+        Student capturedStudent = studentArgumentCaptor.getValue();
+        assertThat(capturedStudent).isEqualTo(student);
+    }
+
+    @Test
     void willThrownWhenEmailIsTaken() {
-        //give
+        //given
         String email = "rafa@gmail.com";
         Student student = new Student(
                 "Rafael",
@@ -122,8 +143,40 @@ class StudentServiceTest {
     }
 
     @Test
+    void canGetStudentById() {
+        //given
+        String email = "rafa@gmail.com";
+        Student student = new Student(
+                "Rafael",
+                email,
+                Gender.MALE
+        );
+        given(studentRepository.findById(1L))
+                .willReturn(Optional.of(student));
+
+        //when
+        underTest.getStudentById(1L);
+
+        //then
+        verify(studentRepository).findById(1L);
+    }
+
+    @Test
+    void studentDoesNotExist() {
+        //given
+        long id = anyLong();
+
+        //when
+
+        //then
+        assertThatThrownBy(() -> underTest.getStudentById(id))
+                .isInstanceOf(StudentNotFoundException.class)
+                .hasMessageContaining("Student with id " + id + " does not exist");
+    }
+
+    @Test
     void willThrownWhenStudentDoesNotExist() {
-        //give
+        //given
         String email = "rafa@gmail.com";
         Student student = new Student(
                 "Rafael",

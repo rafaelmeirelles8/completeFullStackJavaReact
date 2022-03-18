@@ -21,9 +21,19 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @GetMapping("/{id}")
+    public Student getStudentById(@PathVariable Long id) {
+        return studentService.getStudentById(id);
+    }
+
     @PostMapping("/")
     public void createStudent(@Valid @RequestBody Student student) { //@Valid to activate validation dependency like Student @NotBlank, @Email
         studentService.createStudent(student);
+    }
+
+    @PutMapping("/")
+    public void updateStudent(@Valid @RequestBody Student student) {
+        studentService.updateStudent(student);
     }
 
     @DeleteMapping("/")

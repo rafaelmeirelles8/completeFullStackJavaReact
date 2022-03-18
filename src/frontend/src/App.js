@@ -56,72 +56,77 @@ function removeStudent(student, fetchStudents) {
           //message.error(`Student with id: ${student.id} was not deleted!`);
         })
       });
-
 }
 
 function cancel(e) {
   message.error('Click on No');
 }
 
-const columns = fetchStudents => [
-  {
-    title: '',
-    dataIndex: 'avatar',
-    key: 'avatar',
-    render: (text, student) => {
-      return <TheAvatar name={student.name} ></TheAvatar>
-    }
-  },
-  {
-    title: 'Id',
-    dataIndex: 'id',
-    key: 'id',
-  },
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender',
-  },
-  {
-    title: 'Actions',
-    dataIndex: 'actions',
-    key: 'actions',
-    render: (text, student) =>
-        <Radio.Group>
-          <Popconfirm
-              placement="topRight"
-              title={`Are you sure to delete student ${student.name}?`}
-              onConfirm={() => removeStudent(student, fetchStudents)}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-          >
-            <Button value="small">Delete</Button>
-          </Popconfirm>
-          <Radio.Button value="small">Edit</Radio.Button>
-        </Radio.Group>
-  },
-];
-
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function App() {
+
+  const columns = fetchStudents => [
+    {
+      title: '',
+      dataIndex: 'avatar',
+      key: 'avatar',
+      render: (text, student) => {
+        return <TheAvatar name={student.name} ></TheAvatar>
+      }
+    },
+    {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Gender',
+      dataIndex: 'gender',
+      key: 'gender',
+    },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      key: 'actions',
+      render: (text, student) =>
+          <Radio.Group>
+            <Popconfirm
+                placement="topRight"
+                title={`Are you sure to delete student ${student.name}?`}
+                onConfirm={() => removeStudent(student, fetchStudents)}
+                onCancel={cancel}
+                okText="Yes"
+                cancelText="No"
+            >
+              <Button value="small">Delete</Button>
+            </Popconfirm>
+            <Radio.Button value="small" onClick={() => editStudent(student.id)}>Edit</Radio.Button>
+          </Radio.Group>
+    },
+  ];
 
   const [students, setStudents] = useState([]);
   const [collapsed, setCollapsed] = useState(false);
   const [fetching, setFetching] = useState(true);
   const [showDrawer, setShowDrawer] = useState(false);
   const [loggedUser, setLoggedUser] = useState('');
+  const [studentToEdit, setStudentToEdit] = useState(-1);
+
+  function editStudent(studentId) {
+    setShowDrawer(!showDrawer);
+    setStudentToEdit(studentId);
+  }
 
   const fetchStudents = () =>
       getAllStudents()
@@ -155,6 +160,7 @@ function App() {
           showDrawer={showDrawer}
           setShowDrawer={setShowDrawer}
           fetchStudents={fetchStudents}
+          studentToEditID={studentToEdit}
       />
       <Table dataSource={students}
              rowKey={(student) => student.id}
@@ -167,7 +173,7 @@ function App() {
                      <StudentsCountBadge count={students.length}/>
                      <p></p>
                      <Button
-                         onClick={() => setShowDrawer(!showDrawer)}
+                         onClick={() => editStudent(-1)}
                          type="primary" shape="round" icon={<UserAddOutlined />} size="small" >
                        Add Student
                      </Button>

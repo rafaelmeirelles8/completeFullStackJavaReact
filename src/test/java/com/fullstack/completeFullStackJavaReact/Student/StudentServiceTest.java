@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ class StudentServiceTest {
         underTest.getAllStudents();
 
         //then
-        verify(studentRepository).findAll();  //checking that getAllStudents invoked findAllMethod
+        verify(studentRepository).findAll(Sort.by("id").ascending());  //checking that getAllStudents invoked findAllMethod
     }
 
     @Test
@@ -135,7 +136,7 @@ class StudentServiceTest {
         //then
         assertThatThrownBy(() -> underTest.deleteStudent(student))
                 .isInstanceOf(StudentNotFoundException.class)
-                .hasMessageContaining("User with id " + student.getId() + " does not exist");
+                .hasMessageContaining("Student with id " + student.getId() + " does not exist");
 
         verify(studentRepository, never()).delete(any());     //validating that save method is never being called as this method threw an Exception
 

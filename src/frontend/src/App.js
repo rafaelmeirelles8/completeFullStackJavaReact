@@ -24,6 +24,7 @@ import {
 import StudentDrawerForm from "./StudentDrawerForm";
 import StudentsCountBadge from "./StudentsCountBadge";
 import {errorNotification, successNotification} from "./Notification";
+import {useNavigate} from "react-router-dom";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -121,6 +122,7 @@ function App() {
   const [showDrawer, setShowDrawer] = useState(false);
   const [loggedUser, setLoggedUser] = useState('');
   const [studentToEdit, setStudentToEdit] = useState(-1);
+  const navigate = useNavigate();
 
   function editStudent(studentId) {
     setShowDrawer(!showDrawer);
@@ -183,6 +185,13 @@ function App() {
     </>
   }
 
+  function logout() {
+    navigate('/login');
+
+    successNotification('Logout successfully',
+        `User has been logged out`);
+  }
+
   return <Layout style={{ minHeight: '100vh' }}>
     <Sider collapsible collapsed={collapsed}
            onCollapse={setCollapsed}>
@@ -198,7 +207,10 @@ function App() {
     </Sider>
     <Layout className="site-layout">
       <Header className="site-layout-background" style={{ padding: 15 }} >
-        <Button style={{float: 'right'}} type="primary" icon={<LogoutOutlined />}>
+        <Button
+        onClick={logout}
+            style={{float: 'right'}}
+            type="primary" icon={<LogoutOutlined />}>
           Logout
         </Button>
       </Header>

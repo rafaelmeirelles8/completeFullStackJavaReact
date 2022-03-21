@@ -17,10 +17,9 @@ import {
   Divider
 } from 'antd';
 import {
-  TeamOutlined,
   UserOutlined,
   LoadingOutlined,
-  UserAddOutlined,
+  UserAddOutlined, ReadOutlined,
 } from '@ant-design/icons';
 import StudentDrawerForm from "./StudentDrawerForm";
 import StudentsCountBadge from "./StudentsCountBadge";
@@ -190,10 +189,10 @@ function App() {
       <div className="logo" />
       <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
         <Menu.Item key="1" icon={<UserOutlined />}>
-          Users
+          Students
         </Menu.Item>
-        <Menu.Item key="2" icon={<TeamOutlined />}>
-          Groups
+        <Menu.Item key="2" icon={<ReadOutlined />}>
+          Subjects
         </Menu.Item>
       </Menu>
     </Sider>

@@ -19,7 +19,7 @@ import {
 import {
   UserOutlined,
   LoadingOutlined,
-  UserAddOutlined, ReadOutlined,
+  UserAddOutlined, ReadOutlined, LogoutOutlined,
 } from '@ant-design/icons';
 import StudentDrawerForm from "./StudentDrawerForm";
 import StudentsCountBadge from "./StudentsCountBadge";
@@ -197,7 +197,11 @@ function App() {
       </Menu>
     </Sider>
     <Layout className="site-layout">
-      <Header className="site-layout-background" style={{ padding: 0 }} />
+      <Header className="site-layout-background" style={{ padding: 15 }} >
+        <Button style={{float: 'right'}} type="primary" icon={<LogoutOutlined />}>
+          Logout
+        </Button>
+      </Header>
       <Content style={{ margin: '0 16px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Logged User</Breadcrumb.Item>

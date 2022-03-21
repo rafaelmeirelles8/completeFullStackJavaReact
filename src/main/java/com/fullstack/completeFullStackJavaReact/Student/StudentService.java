@@ -27,8 +27,8 @@ public class StudentService {
         return student.get();
     }
 
-    public void createStudent(Student student) {
-        saveStudent(student, true);
+    public Student createStudent(Student student) {
+        return saveStudent(student, true);
     }
 
     public void deleteStudent(Student student) {
@@ -43,12 +43,12 @@ public class StudentService {
         saveStudent(student, false);
     }
 
-    private void saveStudent(Student student, Boolean isCreating) {
+    private Student saveStudent(Student student, Boolean isCreating) {
         Optional<Student> existentStudent = studentRepository.findByEmail(student.getEmail());
         if(existentStudent.isPresent() && isCreating) {
             throw new BadRequestException("Student with email " + student.getEmail() + " already exists!");
         }
 
-        studentRepository.save(student);
+        return studentRepository.save(student);
     }
 }

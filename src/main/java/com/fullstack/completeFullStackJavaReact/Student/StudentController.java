@@ -27,8 +27,8 @@ public class StudentController {
     }
 
     @PostMapping("/")
-    public void createStudent(@Valid @RequestBody Student student) { //@Valid to activate validation dependency like Student @NotBlank, @Email
-        studentService.createStudent(student);
+    public Student createStudent(@Valid @RequestBody Student student) { //@Valid to activate validation dependency like Student @NotBlank, @Email
+        return studentService.createStudent(student);
     }
 
     @PutMapping("/")

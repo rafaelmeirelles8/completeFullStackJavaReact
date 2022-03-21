@@ -64,6 +64,82 @@ public class StudentIT {
     }
 
     @Test
+    void canUpdateStudent() throws Exception {
+        //given
+        String email = faker.internet().emailAddress();
+
+        Student student = new Student(
+                "Rafael",
+                email,
+                Gender.MALE
+        );
+
+        //when
+        Student newStudent = studentRepository.save(student);
+
+        newStudent.setName("Fael");
+        mockMvc.perform(put("/api/v1/students/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(student))
+                ).andExpect(status().isOk());
+
+        //then
+        List<Student> students = studentRepository.findAll();
+
+        assertThat(students).usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
+                .contains(newStudent);
+    }
+
+    @Test
+    void canFindById() throws Exception {
+        //given
+        String email = faker.internet().emailAddress();
+
+        Student student = new Student(
+                "Rafael",
+                email,
+                Gender.MALE
+        );
+
+        MvcResult mvcResultNewStudent = mockMvc.perform(post("/api/v1/students/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(student)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String contentAsString = mvcResultNewStudent
+                .getResponse()
+                .getContentAsString();
+
+        Student newStudent = objectMapper.readValue(
+                contentAsString,
+                new TypeReference<>() {
+                }
+        );
+
+        // when
+        MvcResult mvcResultExistentStudent = mockMvc
+                .perform(get("/api/v1/students/" + newStudent.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        contentAsString = mvcResultExistentStudent
+                .getResponse()
+                .getContentAsString();
+
+        Student existentStudent = objectMapper.readValue(
+                contentAsString,
+                new TypeReference<>() {
+                }
+        );
+
+        // then
+        assertThat(newStudent).isEqualTo(existentStudent);
+
+    }
+
+    @Test
     void canDeleteStudent() throws Exception {
         //given
         String email = faker.internet().emailAddress();

@@ -1,5 +1,7 @@
 package com.fullstack.completeFullStackJavaReact.Student;
 
+import com.fullstack.completeFullStackJavaReact.Exceptions.BadRequestException;
+import com.fullstack.completeFullStackJavaReact.Exceptions.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -170,7 +172,7 @@ class StudentServiceTest {
 
         //then
         assertThatThrownBy(() -> underTest.getStudentById(id))
-                .isInstanceOf(StudentNotFoundException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Student with id " + id + " does not exist");
     }
 
@@ -188,7 +190,7 @@ class StudentServiceTest {
 
         //then
         assertThatThrownBy(() -> underTest.deleteStudent(student))
-                .isInstanceOf(StudentNotFoundException.class)
+                .isInstanceOf(NotFoundException.class)
                 .hasMessageContaining("Student with id " + student.getId() + " does not exist");
 
         verify(studentRepository, never()).delete(any());     //validating that save method is never being called as this method threw an Exception

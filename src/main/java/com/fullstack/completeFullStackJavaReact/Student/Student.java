@@ -1,11 +1,18 @@
 package com.fullstack.completeFullStackJavaReact.Student;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fullstack.completeFullStackJavaReact.Course.Course;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.HashSet;
+import java.util.Set;
 
 //@Data set fields to final
 @ToString
@@ -29,20 +36,47 @@ public class Student {
             strategy = GenerationType.SEQUENCE
     )
     private Long id;
+
     @NotBlank
     @Column(nullable = false)
     private String name;
+
     @Email
     @Column(nullable = false, unique = true)
     private String email;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
 
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate dob;
+
+    @Transient
+    private Integer age;
+
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
+    private Set<Course> coursesTaken = new HashSet<>();
+
     public Student(String name, String email, Gender gender) {
+        this(name, email, gender,null);
+    }
+
+    public Student(String name, String email, Gender gender, LocalDate dob) {
+        this(name, email, gender,dob, null);
+    }
+
+    public Student(String name, String email, Gender gender, LocalDate dob,Set<Course> coursesTaken) {
         this.name = name;
         this.email = email;
         this.gender = gender;
+        this.dob = dob;
+        this.coursesTaken = coursesTaken;
+    }
+
+    public Integer getAge() {
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 }

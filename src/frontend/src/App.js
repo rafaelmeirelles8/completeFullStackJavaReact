@@ -201,7 +201,7 @@ function App() {
           Students
         </Menu.Item>
         <Menu.Item key="2" icon={<ReadOutlined />}>
-          Subjects
+          Courses
         </Menu.Item>
       </Menu>
     </Sider>

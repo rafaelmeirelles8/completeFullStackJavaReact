@@ -9,7 +9,7 @@ function LoginComponent() {
     const navigate = useNavigate();
 
     const onFinish = (values) => {
-        navigate('/main');
+        navigate('/student');
 
         successNotification('Login successfully',
             `User has been logged in`);

@@ -1,4 +1,4 @@
-package com.fullstack.completeFullStackJavaReact.Student;
+package com.fullstack.completeFullStackJavaReact.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

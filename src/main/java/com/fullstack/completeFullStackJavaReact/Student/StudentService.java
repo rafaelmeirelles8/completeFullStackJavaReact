@@ -1,5 +1,7 @@
 package com.fullstack.completeFullStackJavaReact.Student;
 
+import com.fullstack.completeFullStackJavaReact.Exceptions.BadRequestException;
+import com.fullstack.completeFullStackJavaReact.Exceptions.NotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -22,7 +24,7 @@ public class StudentService {
     public Student getStudentById(Long id) {
         Optional<Student> student = studentRepository.findById(id);
 
-        student.orElseThrow(() -> new StudentNotFoundException("Student with id " + id + " does not exist"));
+        student.orElseThrow(() -> new NotFoundException("Student with id " + id + " does not exist"));
 
         return student.get();
     }
@@ -34,7 +36,7 @@ public class StudentService {
     public void deleteStudent(Student student) {
         Optional<Student> existentStudent = studentRepository.findById(student.getId());
 
-        existentStudent.orElseThrow(() -> new StudentNotFoundException("Student with id " + student.getId() + " does not exist"));
+        existentStudent.orElseThrow(() -> new NotFoundException("Student with id " + student.getId() + " does not exist"));
 
         studentRepository.delete(student);
     }

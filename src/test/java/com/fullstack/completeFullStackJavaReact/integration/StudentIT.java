@@ -16,6 +16,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @TestPropertySource(locations = "classpath:application-it.properties")
 @AutoConfigureMockMvc
+@Transactional
 public class StudentIT {
 
     @Autowired
@@ -46,7 +50,9 @@ public class StudentIT {
         Student student = new Student(
                 "Rafael",
                 email,
-                Gender.MALE
+                Gender.MALE,
+                LocalDate.of(1987,12,24),
+                new HashSet<>()
         );
 
         //when
@@ -71,7 +77,9 @@ public class StudentIT {
         Student student = new Student(
                 "Rafael",
                 email,
-                Gender.MALE
+                Gender.MALE,
+                LocalDate.of(1987,12,24),
+                new HashSet<>()
         );
 
         //when
@@ -98,7 +106,9 @@ public class StudentIT {
         Student student = new Student(
                 "Rafael",
                 email,
-                Gender.MALE
+                Gender.MALE,
+                LocalDate.of(1987,12,24),
+                new HashSet<>()
         );
 
         MvcResult mvcResultNewStudent = mockMvc.perform(post("/api/v1/students/")
@@ -147,7 +157,9 @@ public class StudentIT {
         Student student = new Student(
                 "Rafael",
                 email,
-                Gender.MALE
+                Gender.MALE,
+                LocalDate.of(1987,12,24),
+                new HashSet<>()
         );
 
         mockMvc.perform(post("/api/v1/students/")

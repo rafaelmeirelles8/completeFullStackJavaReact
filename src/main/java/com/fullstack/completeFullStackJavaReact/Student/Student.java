@@ -77,6 +77,6 @@ public class Student {
     }
 
     public Integer getAge() {
-        return Period.between(this.dob, LocalDate.now()).getYears();
+        return this.dob != null ? Period.between(this.dob, LocalDate.now()).getYears() : null;
     }
 }

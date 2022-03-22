@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {Breadcrumb, Button, Divider, Image, Layout, Menu} from 'antd';
 import {LogoutOutlined, ReadOutlined, UserOutlined,} from '@ant-design/icons';
 import {successNotification} from "./Notification";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import StudentComponent from "./students/StudentComponent";
 import CourseComponent from "./courses/CourseComponent";
 
@@ -25,10 +25,6 @@ function App(props) {
 
     successNotification('Logout successfully',
         `User has been logged out`);
-  }
-
-  function nav() {
-    navigate('/student');
   }
 
   return <Layout style={{ minHeight: '100vh' }}>

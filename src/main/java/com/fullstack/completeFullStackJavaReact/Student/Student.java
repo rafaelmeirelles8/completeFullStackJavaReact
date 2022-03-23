@@ -56,6 +56,9 @@ public class Student {
     @Transient
     private Integer age;
 
+    @Transient
+    private String genderToDisplay;
+
     @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
     private Set<Course> coursesTaken = new HashSet<>();
@@ -78,5 +81,9 @@ public class Student {
 
     public Integer getAge() {
         return this.dob != null ? Period.between(this.dob, LocalDate.now()).getYears() : null;
+    }
+
+    public String getGenderToDisplay() {
+        return gender.getName();
     }
 }

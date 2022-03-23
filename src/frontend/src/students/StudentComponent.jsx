@@ -1,8 +1,8 @@
 import {Avatar, Button, message, Popconfirm, Radio, Spin, Table, Tag} from "antd";
 import StudentDrawerForm from "./StudentDrawerForm";
-import StudentsCountBadge from "../StudentsCountBadge";
+import CountBadge from "../Common/CountBadge";
 import {LoadingOutlined, UserAddOutlined, UserOutlined} from "@ant-design/icons";
-import {deleteStudent, getAllStudents} from "../client";
+import {deleteStudent, getAllStudents} from "./StudentService";
 import {errorNotification, successNotification} from "../Notification";
 import {useEffect, useState} from "react";
 
@@ -76,8 +76,8 @@ function StudentComponent() {
         },
         {
             title: 'Gender',
-            dataIndex: 'gender',
-            key: 'gender',
+            dataIndex: 'genderToDisplay',
+            key: 'genderToDisplay',
         },
         {
             title: 'Actions',
@@ -147,7 +147,7 @@ function StudentComponent() {
                        () =>
                            <>
                                <Tag>Number of students</Tag>
-                               <StudentsCountBadge count={students.length}/>
+                               <CountBadge count={students.length}/>
                                <p></p>
                                <Button
                                    onClick={() => editStudent(-1)}

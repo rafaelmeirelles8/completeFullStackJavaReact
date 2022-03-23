@@ -1,13 +1,12 @@
-import {Drawer, Input, Col, Select, Form, Row, Button, Spin} from 'antd';
-import {createStudent, getStudentById, updateStudent} from "../client";
+import {Button, Col, Drawer, Form, Input, Row, Spin} from 'antd';
 import {LoadingOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import {errorNotification, successNotification} from "../Notification";
+import {createCourse, getCourseById, updateCourse} from "./CourseService";
 
-const {Option} = Select;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToEditID}) {
+function CourseDrawerForm({showDrawer, setShowDrawer, fetchCourses, courseToEditID}) {
     const onCLose = () => {
         setShowDrawer(false);
         form.resetFields();
@@ -16,8 +15,8 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
     const [form] = Form.useForm();
 
     useEffect(() => {
-        if(showDrawer && studentToEditID > 0) {
-            getStudentById(studentToEditID)
+        if(showDrawer && courseToEditID > 0) {
+            getCourseById(courseToEditID)
                 .then((res) => res.json())
                 .then(data => {
                     form.setFieldsValue({ name: data.name });
@@ -26,43 +25,43 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
                 })
                 .catch(() => {
                     //err.response.json().then(res => {
-                    //    errorNotification('Student not found', `${res.message} [${res.status}]`);
+                    //    errorNotification('Course not found', `${res.message} [${res.status}]`);
                     //})
                 });
         }
     });
 
-    const onFinish = student => {
+    const onFinish = course => {
         setSubmitting(true);
 
-        if(studentToEditID <= 0) {
-            createStudent(student)
+        if(courseToEditID <= 0) {
+            createCourse(course)
                 .then(() => {
-                    successNotification('Student created successfully',
-                        `${student.name} was added to the system`);
+                    successNotification('Course created successfully',
+                        `${course.name} was added to the system`);
                     onCLose();
-                    fetchStudents();
+                    fetchCourses();
                 })
                 .catch(err => {
                     err.response.json().then(res => {
-                        errorNotification('Student was not created', `${res.message} [${res.status}]`);
+                        errorNotification('Course was not created', `${res.message} [${res.status}]`);
                     })
 
                 })
                 .finally(() => setSubmitting(false));
         }
         else {
-            student.id = studentToEditID;
-            updateStudent(student)
+            course.id = courseToEditID;
+            updateCourse(course)
                 .then(() => {
-                    successNotification('Student updated successfully',
-                        `${student.name} was updated to the system`);
+                    successNotification('Course updated successfully',
+                        `${course.name} was updated to the system`);
                     onCLose();
-                    fetchStudents();
+                    fetchCourses();
                 })
                 .catch(err => {
                     err.response.json().then(res => {
-                        errorNotification('Student was not updated', `${res.message} [${res.status}]`);
+                        errorNotification('Course was not updated', `${res.message} [${res.status}]`);
                     })
 
                 })
@@ -79,7 +78,7 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
     const Demo = () => {
 
         return <Drawer
-            title="Create new student"
+            title="Create new course"
             width={720}
             onClose={onCLose}
             visible={showDrawer}
@@ -108,33 +107,18 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
                         <Form.Item
                             name="name"
                             label="Name"
-                            rules={[{required: true, message: 'Please enter student name'}]}
+                            rules={[{required: true, message: 'Please enter course name'}]}
                         >
-                            <Input placeholder="Please enter student name"/>
+                            <Input placeholder="Please enter course name"/>
                         </Form.Item>
                     </Col>
                     <Col span={12}>
                         <Form.Item
-                            name="email"
-                            label="Email"
-                            rules={[{required: true, message: 'Please enter student email'}]}
+                            name="code"
+                            label="Code"
+                            rules={[{required: true, message: 'Please enter course code'}]}
                         >
-                            <Input placeholder="Please enter student email"/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-                <Row gutter={16}>
-                    <Col span={12}>
-                        <Form.Item
-                            name="gender"
-                            label="Gender"
-                            rules={[{required: true, message: 'Please select a gender'}]}
-                        >
-                            <Select placeholder="Please select a gender">
-                                <Option value="MALE">Male</Option>
-                                <Option value="FEMALE">Female</Option>
-                                <Option value="OTHER">Other</Option>
-                            </Select>
+                            <Input placeholder="Please enter course code" maxLength={5}/>
                         </Form.Item>
                     </Col>
                 </Row>
@@ -157,4 +141,4 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
     return Demo();
 }
 
-export default StudentDrawerForm;
+export default CourseDrawerForm;

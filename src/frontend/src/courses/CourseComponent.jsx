@@ -1,10 +1,10 @@
 import {Avatar, Button, message, Popconfirm, Radio, Spin, Table, Tag} from "antd";
-import StudentsCountBadge from "../StudentsCountBadge";
+import CountBadge from "../Common/CountBadge";
 import {LoadingOutlined, UserAddOutlined, UserOutlined} from "@ant-design/icons";
-import {deleteStudent, getAllStudents} from "../client";
 import {errorNotification, successNotification} from "../Notification";
 import {useEffect, useState} from "react";
 import CourseDrawerForm from "./CourseDrawerForm";
+import {deleteCourse, getAllCourses} from "./CourseService";
 
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -27,38 +27,30 @@ const TheAvatar = ({name}) => {
     return <Avatar>{`${nameSplitted[0].charAt(0)}${nameSplitted[1].charAt(0)}`}</Avatar>
 }
 
-function removeStudent(student, fetchStudents) {
-    deleteStudent(student)
+function removeCourse(course, fetchCourses) {
+    deleteCourse(course)
         .then(() => {
-            successNotification('Student deleted successfully',
-                `Student with id ${student.id} was deleted!`);
-            fetchStudents();
+            successNotification('Course deleted successfully',
+                `Course with id ${course.id} was deleted!`);
+            fetchCourses();
         })
         .catch(err => {
             err.response.json().then(res => {
-                errorNotification("Student not deleted!",
+                errorNotification("Course not deleted!",
                     `${res.message} [${res.status}]`)
-                //message.error(`Student with id: ${student.id} was not deleted!`);
+                //message.error(`Course with id: ${course.id} was not deleted!`);
             })
         });
 }
 
 function CourseComponent() {
 
-    const [students, setStudents] = useState([]);
+    const [courses, setCourses] = useState([]);
     const [fetching, setFetching] = useState(true);
     const [showDrawer, setShowDrawer] = useState(false);
-    const [studentToEdit, setStudentToEdit] = useState(-1);
+    const [courseToEdit, setCourseToEdit] = useState(-1);
 
-    const columns = fetchStudents => [
-        {
-            title: '',
-            dataIndex: 'avatar',
-            key: 'avatar',
-            render: (text, student) => {
-                return <TheAvatar name={student.name} ></TheAvatar>
-            }
-        },
+    const columns = fetchCourses => [
         {
             title: 'Id',
             dataIndex: 'id',
@@ -78,38 +70,38 @@ function CourseComponent() {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
-            render: (text, student) =>
+            render: (text, course) =>
                 <Radio.Group>
                     <Popconfirm
                         placement="topRight"
-                        title={`Are you sure to delete student ${student.name}?`}
-                        onConfirm={() => removeStudent(student, fetchStudents)}
+                        title={`Are you sure to delete course ${course.name}?`}
+                        onConfirm={() => removeCourse(course, fetchCourses)}
                         onCancel={cancel}
                         okText="Yes"
                         cancelText="No"
                     >
                         <Button value="small">Delete</Button>
                     </Popconfirm>
-                    <Radio.Button value="small" onClick={() => editStudent(student.id)}>Edit</Radio.Button>
+                    <Radio.Button value="small" onClick={() => editCourse(course.id)}>Edit</Radio.Button>
                 </Radio.Group>
         },
     ];
 
-    function editStudent(studentId) {
+    function editCourse(courseId) {
         setShowDrawer(!showDrawer);
-        setStudentToEdit(studentId);
+        setCourseToEdit(courseId);
     }
 
     useEffect(() => {
         console.log('course');
-        fetchStudents();
+        fetchCourses();
     }, []);
 
-    const fetchStudents = () =>
-        getAllStudents()
+    const fetchCourses = () =>
+        getAllCourses()
             .then(res => res.json())
             .then(data => {
-                setStudents(data);
+                setCourses(data);
             })
             .catch(err => {
                 err.response.json().then(res => errorNotification("There was an issue", `${res.message} [statusCode:${res.status}] [${res.error}]`));
@@ -123,7 +115,7 @@ function CourseComponent() {
             return <Spin indicator={antIcon} />
         }
 
-        /*if(students.length <= 0) {
+        /*if(courses.length <= 0) {
           return <Empty />
         }*/
 
@@ -131,21 +123,21 @@ function CourseComponent() {
             <CourseDrawerForm
                 showDrawer={showDrawer}
                 setShowDrawer={setShowDrawer}
-                fetchStudents={fetchStudents}
-                studentToEditID={studentToEdit}
+                fetchCourses={fetchCourses}
+                courseToEditID={courseToEdit}
             />
-            <Table dataSource={students}
-                   rowKey={(student) => student.id}
-                   columns={columns(fetchStudents)}
+            <Table dataSource={courses}
+                   rowKey={(course) => course.id}
+                   columns={columns(fetchCourses)}
                    bordered
                    title={
                        () =>
                            <>
                                <Tag>Number of courses</Tag>
-                               <StudentsCountBadge count={students.length}/>
+                               <CountBadge count={courses.length}/>
                                <p></p>
                                <Button
-                                   onClick={() => editStudent(-1)}
+                                   onClick={() => editCourse(-1)}
                                    type="primary" shape="round" icon={<UserAddOutlined />} size="small" >
                                    Add Course
                                </Button>

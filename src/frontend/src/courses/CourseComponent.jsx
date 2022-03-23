@@ -1,6 +1,6 @@
-import {Avatar, Button, message, Popconfirm, Radio, Spin, Table, Tag} from "antd";
+import {Button, message, Popconfirm, Radio, Spin, Table, Tag} from "antd";
 import CountBadge from "../Common/CountBadge";
-import {LoadingOutlined, UserAddOutlined, UserOutlined} from "@ant-design/icons";
+import {LoadingOutlined, UserAddOutlined} from "@ant-design/icons";
 import {errorNotification, successNotification} from "../Notification";
 import {useEffect, useState} from "react";
 import CourseDrawerForm from "./CourseDrawerForm";
@@ -11,20 +11,6 @@ const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
 function cancel(e) {
     message.error('Click on No');
-}
-
-const TheAvatar = ({name}) => {
-    let nameTrimmed = name.trim();
-    if(nameTrimmed.length === 0) {
-        return <Avatar icon={<UserOutlined />} />;
-    }
-
-    let nameSplitted = nameTrimmed.split(" ");
-    if(nameSplitted.length === 1) {
-        return <Avatar>{nameSplitted[0].charAt(0)}</Avatar>
-    }
-
-    return <Avatar>{`${nameSplitted[0].charAt(0)}${nameSplitted[1].charAt(0)}`}</Avatar>
 }
 
 function removeCourse(course, fetchCourses) {

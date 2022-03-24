@@ -1,9 +1,9 @@
 import { Badge} from 'antd';
 
-function StudentsCountBadge({count}) {
+function CountBadge({count}) {
     return (
             <Badge count={count} showZero="true" style={{ backgroundColor: '#A5ADAD' }}/>
     );
 };
 
-export default StudentsCountBadge;
+export default CountBadge;

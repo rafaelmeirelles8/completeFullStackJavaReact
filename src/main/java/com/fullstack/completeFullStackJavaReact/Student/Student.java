@@ -60,7 +60,7 @@ public class Student {
     private String genderToDisplay;
 
     @JsonIgnore
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "students")
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL, mappedBy = "students")
     private Set<Course> coursesTaken = new HashSet<>();
 
     public Student(String name, String email, Gender gender) {
@@ -68,7 +68,7 @@ public class Student {
     }
 
     public Student(String name, String email, Gender gender, LocalDate dob) {
-        this(name, email, gender,dob, null);
+        this(name, email, gender,dob, new HashSet<>());
     }
 
     public Student(String name, String email, Gender gender, LocalDate dob,Set<Course> coursesTaken) {

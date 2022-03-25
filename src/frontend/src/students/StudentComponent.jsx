@@ -80,6 +80,11 @@ function StudentComponent() {
             key: 'genderToDisplay',
         },
         {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+        },
+        {
             title: 'Actions',
             dataIndex: 'actions',
             key: 'actions',
@@ -106,7 +111,6 @@ function StudentComponent() {
     }
 
     useEffect(() => {
-        console.log('stu');
         fetchStudents();
     }, []);
 

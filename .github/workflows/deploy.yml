@@ -8,7 +8,7 @@ on:
 
 env:
   # Postgres
-  POSTGRESQL_VERSION: 13.1
+  POSTGRESQL_VERSION: 14.1
   POSTGRESQL_DB: rafaeldb
   POSTGRESQL_USER: postgres
   POSTGRESQL_PASSWORD: password
@@ -18,7 +18,7 @@ env:
   DOCKER_HUB_USERNAME: rafameirel
   # AWS & Elastic Bean Stalk
   AWS_REGION: us-east-2
-  EB_ENVIRONMENT_NAME: Myfullstackjavareact-env-1
+  EB_ENVIRONMENT_NAME: Myfullstackjavareact-env
   EB_APPLICATION_NAME: myfullstack-java-react
   EB_DEPLOYMENT_PACKAGE: elasticbeanstalk/docker-compose.yml
 
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:13.1
+        image: postgres:14.1
         env:
           POSTGRES_DB: ${{ env.POSTGRESQL_DB }}
           POSTGRES_USER: ${{ env.POSTGRESQL_USER }}
@@ -109,7 +109,7 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-          text: ':tada: :arrow_right: http://myfullstackjavareact-env.eba-xwkqb95y.us-east-2.elasticbeanstalk.com'
+          text: ':tada: :arrow_right: http://myfullstackjavareact-env.eba-dpim29yh.us-east-2.elasticbeanstalk.com'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()

@@ -1,8 +1,9 @@
-import {Drawer, Input, Col, Select, Form, Row, Button, Spin} from 'antd';
+import {Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Spin} from 'antd';
 import {createStudent, getStudentById, updateStudent} from "./StudentService";
 import {LoadingOutlined} from "@ant-design/icons";
 import {useEffect, useState} from "react";
 import {errorNotification, successNotification} from "../Notification";
+import moment from "moment";
 
 const {Option} = Select;
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -23,6 +24,7 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
                     form.setFieldsValue({ name: data.name });
                     form.setFieldsValue({ email: data.email });
                     form.setFieldsValue({ gender: data.gender });
+                    form.setFieldsValue({ dob: moment(data.dob) });
                 })
                 .catch(() => {
                     //err.response.json().then(res => {
@@ -135,6 +137,15 @@ function StudentDrawerForm({showDrawer, setShowDrawer, fetchStudents, studentToE
                                 <Option value="FEMALE">Female</Option>
                                 <Option value="OTHER">Other</Option>
                             </Select>
+                        </Form.Item>
+                    </Col>
+                    <Col span={12}>
+                        <Form.Item
+                            name="dob"
+                            label="Date of Birth"
+                            rules={[{required: true, message: 'Date of birth'}]}
+                        >
+                            <DatePicker dateFormat="yyyy-MM-dd" placeholder="Date of birth"/>
                         </Form.Item>
                     </Col>
                 </Row>

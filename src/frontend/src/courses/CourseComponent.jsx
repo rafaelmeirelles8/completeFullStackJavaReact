@@ -79,7 +79,6 @@ function CourseComponent() {
     }
 
     useEffect(() => {
-        console.log('course');
         fetchCourses();
     }, []);
 

@@ -50,7 +50,7 @@ public class Student {
     @Column(nullable = false)
     private Gender gender;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @Column(nullable = false)
     private LocalDate dob;
 
     @Transient

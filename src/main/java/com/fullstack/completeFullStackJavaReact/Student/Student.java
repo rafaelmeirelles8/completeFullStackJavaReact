@@ -64,7 +64,7 @@ public class Student {
     private Set<Course> coursesTaken = new HashSet<>();
 
     public Student(String name, String email, Gender gender) {
-        this(name, email, gender,null);
+        this(name, email, gender, LocalDate.now());
     }
 
     public Student(String name, String email, Gender gender, LocalDate dob) {
